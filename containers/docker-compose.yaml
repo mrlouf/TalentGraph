@@ -1,0 +1,42 @@
+networks:
+  default:
+    name: talentgraph_network
+
+services:
+
+  client:
+    build: ./client
+    depends_on:
+      - api
+    ports:
+      - "8080:8080"
+
+  api:
+    build: ./api
+    depends_on:
+      - postgresql
+    ports:
+      - "3000:3000"
+    environment:
+      - ADDRESS="0.0.0.0"
+      - PORT=3000
+
+  postgresql:
+    build: ./postgresql
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  caddy:
+    image: caddy:latest
+    ports:
+      - "1080:80"
+      - "1443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+
+volumes:
+  db_data:
+  caddy_data:
