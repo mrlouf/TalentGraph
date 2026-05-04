@@ -1,0 +1,4 @@
+talentgraph.localhost {
+  reverse_proxy client:8080
+
+}
