@@ -4,11 +4,11 @@ const fastify = Fastify({
   logger: true
 })
 
-fastify.get('/health', async () => {
+fastify.get('/api/health', async () => {
   return { status: 'ok' }
 })
 
-fastify.get('/', async () => {
+fastify.get('/api', async () => {
   return {
     name: 'talentgraph-api',
     message: 'Fastify TypeScript API is running'
@@ -17,7 +17,7 @@ fastify.get('/', async () => {
 
 async function start() {
   const port = Number(process.env.PORT ?? 3000)
-  const host = process.env.HOST ?? '0.0.0.0'
+  const host = process.env.ADDRESS ?? '0.0.0.0'
 
   try {
     const address = await fastify.listen({ port, host })
